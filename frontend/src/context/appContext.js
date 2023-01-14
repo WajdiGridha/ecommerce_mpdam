@@ -47,11 +47,6 @@ const AppProvider = ({ children }) => {
     localStorage.setItem("token", token);
   };
 
-  const removeUser = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-  };
-
   const registerUser = async (currentUser) => {
     dispatch({
       type: REGISTER_USER_BEGIN,
