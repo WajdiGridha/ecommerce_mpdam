@@ -11,39 +11,49 @@ const initialState = {
   isMember: true,
 };
 
-const Register = () => {
+const Register = () =>
+{
   const [values, setValues] = useState(initialState);
   const navigate = useNavigate();
 
   const { user, isLoading, showAlert, displayAlert, registerUser, loginUser } =
     useAppContext();
 
-  const toggleMember = () => {
+  const toggleMember = () =>
+  {
     setValues({ ...values, isMember: !values.isMember });
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
+  {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) =>
+  {
     e.preventDefault();
     const { name, email, password, isMember } = values;
-    if (!email || !password || (!isMember && !name)) {
+    if (!email || !password || (!isMember && !name))
+    {
       displayAlert();
       return;
     }
     const currentUser = { name, email, password };
 
-    if (isMember) {
+    if (isMember)
+    {
       loginUser(currentUser);
-    } else {
+    } else
+    {
       registerUser(currentUser);
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      setTimeout(() => {
+  useEffect(() =>
+  {
+    if (user)
+    {
+      setTimeout(() =>
+      {
         navigate("/dashboard");
       }, 2000);
     }
@@ -93,7 +103,7 @@ const Register = () => {
         </button>
 
         <p className="flex justify-center gap-4 bg-white uppercase p-1 items-center">
-          {!values.isMember ? "Already a meber?" : "Not a memeber yet ?"}
+          {!values.isMember ? "Already a member?" : "Not a memeber yet ?"}
           <button
             type="button"
             onClick={toggleMember}

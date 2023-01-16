@@ -68,7 +68,6 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
-
     clearAlert();
   };
 

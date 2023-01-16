@@ -10,8 +10,11 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(bodyParser.json(), urlencodedParser);
 
 app.use(express.json());
-app.get("/", (req, res) => {
+app.get("/", (req, res) =>
+{
   res.send("Hello Mpdam");
 });
 app.use("/api/v1/auth", require("./routes/authRoutes"));
+app.use("/api/", require("./routes/produitRoutes"));
 app.listen(port, () => console.log(`Server Stated on ${port}`));
+
