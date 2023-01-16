@@ -15,6 +15,6 @@ app.get("/", (req, res) =>
   res.send("Hello Mpdam");
 });
 app.use("/api/v1/auth", require("./routes/authRoutes"));
-app.use("/api/", require("./routes/produitRoutes"));
+app.use("/api/produit", require("./routes/produitRoutes"));
 app.listen(port, () => console.log(`Server Stated on ${port}`));
 

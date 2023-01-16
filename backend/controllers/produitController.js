@@ -29,20 +29,20 @@ const AddProduit = async (req, res) =>
     }
 };
 
+//Update
 const UpdateProduit = async (req, res) =>
 {
-    try
+    const prodUpdated = await Produit.findById(req.params.id)
+    if (!prodUpdated)
     {
-        const { name, email, password } = req.body;
-        const produit = await Produit.create({ name, email, password });
-        res
-            .status(201)
-            .json({ user: { email: user.email, name: user.name }, token });
-    } catch (error)
-    {
-        res.status(500).json({ msg: "an error occurred" });
+        res.status(400)
+        throw new Error('Produit not found')
     }
-};
+    const updateProduit = await Produit.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+    })
+    res.status(200).json(updateProduit)
+}
 
 const GetProduit = async (id) =>
 {
@@ -57,32 +57,23 @@ const GetProduit = async (id) =>
     }
 }
 
+//Delete
 const DeleteProduit = async (req, res) =>
 {
-    try
+    const produit = await Produit.findById(req.params.id)
+    if (!produit)
     {
-        const { name, email, password } = req.body;
-        const produit = await Produit.create({ name, email, password });
-        const token = user.createJWT();
-        res
-            .status(201)
-            .json({ user: { email: user.email, name: user.name }, token });
-    } catch (error)
-    {
-        res.status(500).json({ msg: "an error occurred" });
+        res.status(400)
+        throw new Error('Produit not found')
     }
+    await Produit.findOneAndRemove()
+    res.status(200).json({ id: req.params.id })
+}
 
-};
-const GetAllProduit = async () =>
+//GET
+const GetAllProduit = async (req, res) =>
 {
-    try
-    {
-        const produits = await Produit.find({})
-        if (!produit) throw new Error('Produit not found')
-        return { error: null, data: produits }
-    } catch (error)
-    {
-        return { error: error.message, data: null }
-    }
+    const produits = await Produit.find()
+    res.status(200).json(produits)
 }
 module.exports = { AddProduit, UpdateProduit, DeleteProduit, GetAllProduit, GetProduit };
