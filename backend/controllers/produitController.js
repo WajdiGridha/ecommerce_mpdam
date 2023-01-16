@@ -2,78 +2,100 @@ const Produit = require("../models/produit");
 
 const AddProduit = async (req, res) =>
 {
-    try
-    {
-        const { code, description, notes, avis, enStock, image, prix, fonctionnalites } = req.body;
-        const produit = await Produit.create({
-            code, description, notes, avis,
-            enStock, image, prix, fonctionnalites
-        });
-        res
-            .status(201)
-            .json({
-                produit: {
-                    code: produit.code,
-                    description: produit.description,
-                    notes: produit.notes,
-                    avis: produit.avis,
-                    enStock: produit.enStock,
-                    image: produit.image,
-                    prix: produit.prix,
-                    fonctionnalites: produit.fonctionnalites
-                }
-            });
-    } catch (error)
-    {
-        res.status(500).json({ msg: "an error occurred", error });
-    }
+  try
+  {
+    const { code, description, notes, avis, enStock, image, prix, fonctionnalites } = req.body;
+    const produit = await Produit.create({
+      code, description, notes, avis,
+      enStock, image, prix, fonctionnalites
+    });
+    res
+      .status(201)
+      .json({
+        produit: {
+          code: produit.code,
+          description: produit.description,
+          notes: produit.notes,
+          avis: produit.avis,
+          enStock: produit.enStock,
+          image: produit.image,
+          prix: produit.prix,
+          fonctionnalites: produit.fonctionnalites
+        }
+      });
+  } catch (error)
+  {
+    res.status(500).json({ msg: "an error occurred", error });
+  }
 };
 
+
 //Update
+//http://localhost:5000/api/produit/63c5930f12e3387e1b0e16c3
 const UpdateProduit = async (req, res) =>
 {
-    const prodUpdated = await Produit.findById(req.params.id)
-    if (!prodUpdated)
+  if (!req.body)
+  {
+    return res.status(400).send({
+      message: "Data to update can not be empty!"
+    });
+  }
+  const id = req.params.id;
+  Produit.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    .then(data =>
     {
-        res.status(400)
-        throw new Error('Produit not found')
-    }
-    const updateProduit = await Produit.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
+      if (!data)
+      {
+        res.status(404).send({
+          message: `Cannot update Produit with id=${id}. Maybe Produit was not found!`
+        });
+      } else res.send({ message: "Produit was updated successfully.", data });
     })
-    res.status(200).json(updateProduit)
-}
-
-const GetProduit = async (id) =>
+    .catch(err =>
+    {
+      res.status(500).send({
+        message: "Error updating Produit with id=" + id
+      });
+    });
+};
+///Get By ID
+// http://localhost:5000/api/produit/63c5930f12e3387e1b0e16c3
+const GetProduit = async (req, res) =>
 {
-    try
+  const id = req.params.id;
+  Produit.findById(id)
+    .then(data =>
     {
-        const produit = await Produit.findByIdAndUpdate(id)
-        if (!produit) throw new Error('Could not retrieve book')
-        return { error: null, data: produit }
-    } catch (error)
+      if (!data)
+        res.status(404).send({ message: "Not found Produit with id " + id });
+      else res.send(data);
+    })
+    .catch(err =>
     {
-        return { error: error.message, data: null }
-    }
+      res
+        .status(500)
+        .send({ message: "Error retrieving Produit with id=" + id });
+    });
 }
 
 //Delete
 const DeleteProduit = async (req, res) =>
 {
-    const produit = await Produit.findById(req.params.id)
-    if (!produit)
-    {
-        res.status(400)
-        throw new Error('Produit not found')
-    }
-    await Produit.findOneAndRemove()
-    res.status(200).json({ id: req.params.id })
+  const produit = await Produit.findById(req.params.id)
+  if (!produit)
+  {
+    res.status(400)
+    throw new Error('Produit not found')
+  }
+  await Produit.findOneAndRemove()
+  res.status(200).json({ id: req.params.id })
 }
 
-//GET
+//GETAll Produit
+// http://localhost:5000/api/produit  
 const GetAllProduit = async (req, res) =>
 {
-    const produits = await Produit.find()
-    res.status(200).json(produits)
+  const produits = await Produit.find()
+  res.status(200).json(produits)
 }
 module.exports = { AddProduit, UpdateProduit, DeleteProduit, GetAllProduit, GetProduit };

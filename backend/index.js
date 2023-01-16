@@ -1,11 +1,17 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const bodyParser = require("body-parser");
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 const connectDB = require("./config/db");
+// const cors = require("cors");
+// var corsOptions = {
+//   origin: "http://localhost:5000"
+// };
 
 connectDB();
 const app = express();
+// app.use(cors(corsOptions));
+
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(bodyParser.json(), urlencodedParser);
 
