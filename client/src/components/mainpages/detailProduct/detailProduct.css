@@ -1,46 +1,75 @@
-.detail{
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 50px;
-    font-size: 150%;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
 }
-.detail img{
-    max-width: 400px;
-    width: 100%;
-    margin: 20px;
-    height: 450px;
-    object-fit: cover;
-    display: block;
+
+.right-column {
+  width: 50%;
+  margin-top: 60px;
 }
-.box-detail{
-    max-width: 500px;
-    width: 100%;
-    margin: 5px 20px;
+.detail {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 50px;
+  font-size: 150%;
 }
-.box-detail .row{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.product-description {
+  border-bottom: 1px solid #e1e8ee;
+  margin-bottom: 20px;
+  font-size: 15px;
+  color: black;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
 }
-.box-detail h2{
-    text-transform: uppercase;
-    color: darkblue;
-    letter-spacing: 2px;
-    font-weight: 2rem;
+
+.product-price {
+  display: flex;
+  align-items: center;
+  font-size: 26px;
+  font-weight: 300;
+  color: #43474d;
+  margin-right: 20px;
 }
-.box-detail p{
-    line-height: 1.5;
-    margin: 10px 0;
-    opacity: 0.8;
+.detail img {
+  max-width: 400px;
+  width: 100%;
+  margin: 20px;
+  height: 450px;
+  object-fit: cover;
+  display: block;
 }
-.box-detail .cart{
-    background: #333;
-    color: white;
-    margin-top: 10px;
-    padding: 10px 25px;
-    display: inline-block;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+.box-detail {
+  max-width: 500px;
+  width: 100%;
+  margin: 5px 20px;
+}
+.box-detail .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.box-detail h2 {
+  text-transform: uppercase;
+  color: darkblue;
+  letter-spacing: 2px;
+  font-weight: 2rem;
+}
+.box-detail p {
+  line-height: 1.5;
+  margin: 10px 0;
+  opacity: 0.8;
+}
+.box-detail .cart {
+  background: #333;
+  color: white;
+  margin-top: 10px;
+  padding: 10px 25px;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
