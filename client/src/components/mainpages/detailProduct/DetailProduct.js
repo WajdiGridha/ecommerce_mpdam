@@ -33,8 +33,7 @@ function DetailProduct() {
               </div>
               <span className="product-price">TND {detailProduct.price}</span>
               <p className="product-description">{detailProduct.description}</p>
-              <p>{detailProduct.content}</p>
-              <p>Sold: {detailProduct.sold}</p>
+              <p className="product-content">{detailProduct.content}</p>
             </div>
           </div>
         </div>
