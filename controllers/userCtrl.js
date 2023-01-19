@@ -16,7 +16,6 @@ const userCtrl = {
           .status(400)
           .json({ msg: "Password is at least 6 characters long." });
 
-      // Password Encryption
       const passwordHash = await bcrypt.hash(password, 10);
       const newUser = new Users({
         name,
@@ -24,17 +23,15 @@ const userCtrl = {
         password: passwordHash,
       });
 
-      // Save mongodb
       await newUser.save();
 
-      // Then create jsonwebtoken to authentication
       const accesstoken = createAccessToken({ id: newUser._id });
       const refreshtoken = createRefreshToken({ id: newUser._id });
 
       res.cookie("refreshtoken", refreshtoken, {
         httpOnly: true,
         path: "/user/refresh_token",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7d
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       });
 
       res.json({ accesstoken });
@@ -52,14 +49,13 @@ const userCtrl = {
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(400).json({ msg: "Incorrect password." });
 
-      // If login success , create access token and refresh token
       const accesstoken = createAccessToken({ id: user._id });
       const refreshtoken = createRefreshToken({ id: user._id });
 
       res.cookie("refreshtoken", refreshtoken, {
         httpOnly: true,
         path: "/user/refresh_token",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7d
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       });
 
       res.json({ accesstoken });
@@ -99,23 +95,6 @@ const userCtrl = {
       if (!user) return res.status(400).json({ msg: "User does not exist." });
 
       res.json(user);
-    } catch (err) {
-      return res.status(500).json({ msg: err.message });
-    }
-  },
-  addCart: async (req, res) => {
-    try {
-      const user = await Users.findById(req.user.id);
-      if (!user) return res.status(400).json({ msg: "User does not exist." });
-
-      await Users.findOneAndUpdate(
-        { _id: req.user.id },
-        {
-          cart: req.body.cart,
-        }
-      );
-
-      return res.json({ msg: "Added to cart" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
