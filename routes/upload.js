@@ -42,7 +42,6 @@ router.post("/upload", auth, authAdmin, (req, res) => {
   }
 });
 
-// Delete image only admin can use
 router.post("/destroy", auth, authAdmin, (req, res) => {
   try {
     const { public_id } = req.body;
